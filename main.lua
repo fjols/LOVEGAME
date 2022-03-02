@@ -1,23 +1,40 @@
 function love.load()
-	x = 100
-	y = 200
+	listOfParticles = {}
+	for i = 1, 100 do
+		createParticle()
+	end
 end
 
-
-function move(dt)
-	if love.keyboard.isDown("right") then
-		x = x + 100 * dt
+function createParticle()
+	particle = {}
+	particle.x = 0
+	particle.y = 0
+	particle.size = 0
+	particle.red = 0
+	particle.green = 0
+	particle.blue = 0
+	for i, v in ipairs(listOfParticles) do
+		v.x = math.random(0, 800)
+		v.y = math.random(0, 50)
+		v.size = math.random(0, 25)
+		v.red = math.random(0, 255)
+		v.green = math.random(0, 255)
+		v.blue = math.random(0, 255)
 	end
-	if love.keyboard.isDown("left") then
-		x = x - 100 * dt
-	end
+	table.insert(listOfParticles, particle)
 end
 
 function love.update(dt)
-	move(dt)
+	--for i, v in ipairs(listOfParticles) do
+	--	v.y = v.y + 50 * dt
+	--end
 end
 
 
 function love.draw()
-	love.graphics.circle("fill", x, y, 100, 25)
+	for i, v in ipairs(listOfParticles) do
+		love.graphics.setColor(v.red, v.green, v.blue)
+		love.graphics.circle("fill", v.x, v.y, v.size)
+	end
+	love.graphics.print("eheew", 100, 100)
 end
